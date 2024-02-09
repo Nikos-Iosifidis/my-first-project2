@@ -10,7 +10,7 @@ import { DragToSelectModule } from 'ngx-drag-to-select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TableModule } from 'primeng/table';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-//import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,7 +21,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     DragToSelectModule.forRoot(),
     ButtonModule,
     TableModule,
-    //DragDropModule,
+    DragDropModule,
   ],
   providers: [provideClientHydration(), provideAnimationsAsync()],
   bootstrap: [AppComponent],

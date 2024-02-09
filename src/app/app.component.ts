@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Component, ViewChild } from '@angular/core';
+import { SelectContainerComponent } from 'ngx-drag-to-select';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +11,9 @@ import { Component } from '@angular/core';
 export class AppComponent {
   products: Product[] = [];
   selectedDocuments: any[] = [];
-  disable: boolean = false;
+  disableDragSelection: boolean = false;
+  @ViewChild(SelectContainerComponent)
+  selectContainer: SelectContainerComponent | null = null;
 
   constructor() {
     this.products.push({
@@ -22,6 +27,7 @@ export class AppComponent {
       quantity: 241,
       inventoryStatus: 'INSTOCK',
       rating: 5,
+      dragEnabled: false,
     });
     this.products.push({
       id: '1001',
@@ -34,6 +40,7 @@ export class AppComponent {
       quantity: 24,
       inventoryStatus: 'INSTOCK',
       rating: 5,
+      dragEnabled: false,
     });
     this.products.push({
       id: '1002',
@@ -46,6 +53,7 @@ export class AppComponent {
       quantity: 24,
       inventoryStatus: 'INSTOCK',
       rating: 5,
+      dragEnabled: false,
     });
     this.products.push({
       id: '1004',
@@ -58,6 +66,7 @@ export class AppComponent {
       quantity: 241,
       inventoryStatus: 'INSTOCK',
       rating: 5,
+      dragEnabled: false,
     });
     this.products.push({
       id: '1005',
@@ -70,6 +79,7 @@ export class AppComponent {
       quantity: 24,
       inventoryStatus: 'INSTOCK',
       rating: 5,
+      dragEnabled: false,
     });
     this.products.push({
       id: '1006',
@@ -82,6 +92,7 @@ export class AppComponent {
       quantity: 24,
       inventoryStatus: 'INSTOCK',
       rating: 5,
+      dragEnabled: false,
     });
   }
 
@@ -94,14 +105,25 @@ export class AppComponent {
   }
 
   disableIfNeeded(event: any, product: Product) {
-    console.log(this.products);
-    this.disable =
+    this.disableDragSelection =
       this.selectedDocuments.length === 1 &&
       this.selectedDocuments[0] === product;
+    this.products.forEach((x) => {
+      x.dragEnabled = false;
+    });
+    product.dragEnabled = this.disableDragSelection;
   }
+
   disableReorder() {
     //console.log(this.selectedDocuments.length);
     return this.selectedDocuments.length > 1;
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.products, event.previousIndex, event.currentIndex);
+    setTimeout(() => {
+      this.selectContainer?.update();
+    });
   }
 }
 
@@ -116,4 +138,5 @@ export interface Product {
   quantity: any;
   inventoryStatus: any;
   rating: any;
+  dragEnabled: boolean;
 }

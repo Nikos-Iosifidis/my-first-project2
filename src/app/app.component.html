@@ -1,14 +1,18 @@
-<div class="card">
-  <dts-select-container
-    #container="dts-select-container"
-    [(selectedItems)]="selectedDocuments"
-    (select)="someMethod($event)"
-    [disabled]="disable"
-  >
-    <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+<dts-select-container
+  #container="dts-select-container"
+  [(selectedItems)]="selectedDocuments"
+  (select)="someMethod($event)"
+  [disabled]="disableDragSelection"
+>
+  <div class="card">
+    <p-table
+      [value]="products"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
+    >
       <ng-template pTemplate="header">
         <tr>
-          <th style="width: 3rem"></th>
           <th>Code</th>
           <th>Name</th>
           <th>Category</th>
@@ -21,16 +25,15 @@
           [dtsSelectItem]="product"
           (click)="disableIfNeeded($event, product)"
           (mousedown)="disableIfNeeded($event, product)"
+          cdkDrag
+          [cdkDragDisabled]="!product.dragEnabled"
         >
-          <td>
-            <span class="pi pi-bars" pReorderableRowHandle></span>
-          </td>
-          <td>{{ product.code }}</td>
-          <td>{{ product.name }}</td>
+          <td cdkDragHandle>{{ product.code }}</td>
+          <td cdkDragHandle>{{ product.name }}</td>
           <td>{{ product.category }}</td>
           <td>{{ product.quantity }}</td>
         </tr>
       </ng-template>
     </p-table>
-  </dts-select-container>
-</div>
+  </div>
+</dts-select-container>
