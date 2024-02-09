@@ -86,7 +86,7 @@ export class AppComponent {
   }
 
   someMethod(event: any) {
-    console.log(event);
+    //console.log(event);
   }
 
   isSelected(product: Product) {
@@ -94,13 +94,13 @@ export class AppComponent {
   }
 
   disableIfNeeded(event: any, product: Product) {
-    console.log(event);
+    console.log(this.products);
     this.disable =
       this.selectedDocuments.length === 1 &&
       this.selectedDocuments[0] === product;
   }
   disableReorder() {
-    console.log(this.selectedDocuments.length);
+    //console.log(this.selectedDocuments.length);
     return this.selectedDocuments.length > 1;
   }
 }
