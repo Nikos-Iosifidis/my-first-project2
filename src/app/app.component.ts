@@ -1,7 +1,7 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, ViewChild } from '@angular/core';
 import { SelectContainerComponent } from 'ngx-drag-to-select';
-import { timeout } from 'rxjs';
+import { Dataservice } from './services/data.service';
 
 @Component({
   selector: 'app-root',
@@ -15,85 +15,8 @@ export class AppComponent {
   @ViewChild(SelectContainerComponent)
   selectContainer: SelectContainerComponent | null = null;
 
-  constructor() {
-    this.products.push({
-      id: '1000',
-      code: 'f230fh0g31',
-      name: 'Bamboo Watch1',
-      description: 'Product Description1',
-      image: 'bamboo-watch.jpg',
-      price: 651,
-      category: 'Accessories1',
-      quantity: 241,
-      inventoryStatus: 'INSTOCK',
-      rating: 5,
-      dragEnabled: false,
-    });
-    this.products.push({
-      id: '1001',
-      code: 'f230fh0g32',
-      name: 'Bamboo Watch2',
-      description: 'Product Description2',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories2',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5,
-      dragEnabled: false,
-    });
-    this.products.push({
-      id: '1002',
-      code: 'f230fh0g33',
-      name: 'Bamboo Watch3',
-      description: 'Product Description3',
-      image: 'bamboo-watch3.jpg',
-      price: 65,
-      category: 'Accessories3',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5,
-      dragEnabled: false,
-    });
-    this.products.push({
-      id: '1004',
-      code: 'f230fh0g34',
-      name: 'Bamboo Watch1',
-      description: 'Product Description1',
-      image: 'bamboo-watch.jpg',
-      price: 651,
-      category: 'Accessories1',
-      quantity: 241,
-      inventoryStatus: 'INSTOCK',
-      rating: 5,
-      dragEnabled: false,
-    });
-    this.products.push({
-      id: '1005',
-      code: 'f230fh0g35',
-      name: 'Bamboo Watch2',
-      description: 'Product Description2',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories2',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5,
-      dragEnabled: false,
-    });
-    this.products.push({
-      id: '1006',
-      code: 'f230fh0g36',
-      name: 'Bamboo Watch3',
-      description: 'Product Description3',
-      image: 'bamboo-watch3.jpg',
-      price: 65,
-      category: 'Accessories3',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5,
-      dragEnabled: false,
-    });
+  constructor(private dataService: Dataservice) {
+    this.products = this.dataService.createProducts(100);
   }
 
   someMethod(event: any) {
@@ -131,12 +54,7 @@ export interface Product {
   id: any;
   code: any;
   name: any;
-  description: any;
-  image: any;
-  price: any;
   category: any;
   quantity: any;
-  inventoryStatus: any;
-  rating: any;
   dragEnabled: boolean;
 }
