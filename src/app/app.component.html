@@ -1,7 +1,8 @@
 <dts-select-container
   #container="dts-select-container"
-  [(selectedItems)]="selectedDocuments"
-  (select)="someMethod($event)"
+  [(selectedItems)]="selectedProducts"
+  (selectedItemsChange)="triggerSelectedProductsUpdate()"
+  (select)="select($event)"
   [disabled]="disableDragSelection"
 >
   <div class="card">
@@ -10,9 +11,16 @@
       [tableStyle]="{ 'min-width': '50rem' }"
       cdkDropList
       (cdkDropListDropped)="drop($event)"
+      [paginator]="true"
+      [rows]="10"
+      [(selection)]="selectedProducts"
+      selectionMode="multiple"
     >
       <ng-template pTemplate="header">
         <tr>
+          <th class="hidden">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
           <th>Code</th>
           <th>Name</th>
           <th>Category</th>
@@ -23,16 +31,24 @@
       <ng-template pTemplate="body" let-product let-index="rowIndex">
         <tr
           [dtsSelectItem]="product"
-          (click)="disableIfNeeded($event, product)"
-          (mousedown)="disableIfNeeded($event, product)"
+          (click)="configureDragAndDrop($event, product)"
+          (mousedown)="configureDragAndDrop($event, product)"
           cdkDrag
           [cdkDragDisabled]="!product.dragEnabled"
         >
+          <td class="hidden">
+            <p-tableCheckbox [value]="product"></p-tableCheckbox>
+          </td>
           <td cdkDragHandle>{{ product.code }}</td>
           <td cdkDragHandle>{{ product.name }}</td>
           <td>{{ product.category }}</td>
           <td>{{ product.quantity }}</td>
         </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          Selected {{ selectedProducts.length }} products.
+        </div>
       </ng-template>
     </p-table>
   </div>

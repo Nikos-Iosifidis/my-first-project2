@@ -10,7 +10,7 @@ import { Dataservice } from './services/data.service';
 })
 export class AppComponent {
   products: Product[] = [];
-  selectedDocuments: any[] = [];
+  selectedProducts: any[] = [];
   disableDragSelection: boolean = false;
   @ViewChild(SelectContainerComponent)
   selectContainer: SelectContainerComponent | null = null;
@@ -19,27 +19,20 @@ export class AppComponent {
     this.products = this.dataService.createProducts(100);
   }
 
-  someMethod(event: any) {
-    //console.log(event);
-  }
+  select(product: Product[]) {}
 
   isSelected(product: Product) {
-    return !!this.selectedDocuments.find((x) => x == product);
+    return !!this.selectedProducts.find((x) => x == product);
   }
 
-  disableIfNeeded(event: any, product: Product) {
+  configureDragAndDrop(event: any, product: Product) {
     this.disableDragSelection =
-      this.selectedDocuments.length === 1 &&
-      this.selectedDocuments[0] === product;
+      this.selectedProducts.length === 1 &&
+      this.selectedProducts[0] === product;
     this.products.forEach((x) => {
       x.dragEnabled = false;
     });
     product.dragEnabled = this.disableDragSelection;
-  }
-
-  disableReorder() {
-    //console.log(this.selectedDocuments.length);
-    return this.selectedDocuments.length > 1;
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -47,6 +40,10 @@ export class AppComponent {
     setTimeout(() => {
       this.selectContainer?.update();
     });
+  }
+
+  triggerSelectedProductsUpdate() {
+    this.selectedProducts = [...this.selectedProducts];
   }
 }
 
