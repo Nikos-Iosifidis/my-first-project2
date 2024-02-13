@@ -11,9 +11,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TableModule } from 'primeng/table';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DropdownModule } from 'primeng/dropdown';
+import { ReactiveFormsModule } from '@angular/forms';
+import { PageUpDownListenerDirective } from './directives/page-up-down-listener.directive';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PageUpDownListenerDirective],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -22,6 +25,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ButtonModule,
     TableModule,
     DragDropModule,
+    DropdownModule,
+    ReactiveFormsModule,
   ],
   providers: [provideClientHydration(), provideAnimationsAsync()],
   bootstrap: [AppComponent],

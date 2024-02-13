@@ -1,3 +1,17 @@
+<div>
+  <form [formGroup]="formGroup">
+    <p-dropdown
+      #dropdowninstance
+      pageUpDownListener
+      [dropdown]="dropdowninstance"
+      formControlName="selectedProductDrp"
+      [options]="products"
+      optionLabel="name"
+      placeholder="Select a City"
+    ></p-dropdown>
+  </form>
+</div>
+
 <dts-select-container
   #container="dts-select-container"
   [(selectedItems)]="selectedProducts"

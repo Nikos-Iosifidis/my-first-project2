@@ -2,6 +2,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, ViewChild } from '@angular/core';
 import { SelectContainerComponent } from 'ngx-drag-to-select';
 import { Dataservice } from './services/data.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +15,13 @@ export class AppComponent {
   disableDragSelection: boolean = false;
   @ViewChild(SelectContainerComponent)
   selectContainer: SelectContainerComponent | null = null;
+  formGroup: FormGroup;
 
   constructor(private dataService: Dataservice) {
     this.products = this.dataService.createProducts(100);
+    this.formGroup = new FormGroup({
+      selectedProductDrp: new FormControl<Product | null>(null),
+    });
   }
 
   select(product: Product[]) {}
