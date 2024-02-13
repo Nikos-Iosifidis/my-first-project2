@@ -27,7 +27,7 @@ export class PageUpDownListenerDirective implements AfterViewInit {
     if (this.isDropdownFocused()) {
       this.navigateDropdownItems(-this.step);
       this.dropdown.scrollInView(this.dropdown.focusedOptionIndex());
-      event.preventDefault(); // Prevent the default behavior if needed
+      event.preventDefault();
     }
   }
 
@@ -36,7 +36,7 @@ export class PageUpDownListenerDirective implements AfterViewInit {
     if (this.isDropdownFocused()) {
       this.navigateDropdownItems(this.step);
       this.dropdown.scrollInView(this.dropdown.focusedOptionIndex());
-      event.preventDefault(); // Prevent the default behavior if needed
+      event.preventDefault();
     }
   }
 
@@ -45,7 +45,6 @@ export class PageUpDownListenerDirective implements AfterViewInit {
   }
 
   private navigateDropdownItems(direction: number): void {
-    // Change the focused dropdown item based on the direction
     const lastIndex = this.dropdown.findLastOptionIndex();
     if (
       direction > 0 &&
