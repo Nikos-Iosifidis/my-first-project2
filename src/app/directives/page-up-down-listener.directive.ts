@@ -14,12 +14,28 @@ export class PageUpDownListenerDirective implements AfterViewInit {
   @Input({ required: true }) dropdown!: Dropdown;
 
   private step = 10;
+  private defaultOnClickFn!: (
+    event: any,
+    option: any,
+    isHide?: boolean,
+    preventChange?: boolean
+  ) => void;
 
   constructor(private el: ElementRef) {}
 
   ngAfterViewInit(): void {
     this.dropdown.onPageUpKey = () => {};
     this.dropdown.onPageDownKey = () => {};
+    this.defaultOnClickFn = this.dropdown.onOptionSelect;
+    this.dropdown.onOptionSelect = (
+      event: any,
+      option: any,
+      isHide?: boolean,
+      preventChange?: boolean
+    ) => {
+      this.defaultOnClickFn.apply(this.dropdown,[event, option, isHide, preventChange]);
+      event.preventDefault();
+    };
   }
 
   @HostListener('document:keydown.pageup', ['$event'])
